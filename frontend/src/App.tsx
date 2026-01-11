@@ -13,7 +13,9 @@ import ProtectedRoute from './components/common/ProtectedRoute';
 
 // Pages
 import LoginPage from './pages/LoginPage';
+import AdminLoginPage from './pages/AdminLoginPage';
 import DashboardPage from './pages/DashboardPage';
+import AdminDashboardPage from './pages/AdminDashboardPage';
 import BookingPage from './pages/BookingPage';
 import LandingPage from './pages/LandingPage';
 import RegisterPage from './pages/RegisterPage';
@@ -30,6 +32,7 @@ function App() {
             <Routes>
               {/* Public routes */}
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/admin-login" element={<AdminLoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/reset-password" element={<ResetPasswordPage />} />
               <Route path="/" element={<LandingPage />} />
@@ -57,7 +60,7 @@ function App() {
                 }
               />
 
-              {/* Admin routes */}
+              {/* Admin routes - Protected by role */}
               <Route
                 path="/admin/*"
                 element={
@@ -68,8 +71,8 @@ function App() {
                         <Header onMenuClick={() => setSidebarOpen(true)} />
                         <main className="flex-1 overflow-y-auto p-6">
                           <Routes>
-                            {/* Admin routes will be added here */}
-                            <Route path="/admin" element={<div>Admin Dashboard</div>} />
+                            <Route path="/dashboard" element={<AdminDashboardPage />} />
+                            <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
                           </Routes>
                         </main>
                       </div>
@@ -77,6 +80,9 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+
+              {/* Catch-all */}
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </div>
           <Toaster position="top-right" />
