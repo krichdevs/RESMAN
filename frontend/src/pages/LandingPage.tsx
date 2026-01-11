@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import logo from '../media/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { roomsApi } from '../api/rooms';
 import Sparkline from '../components/common/Sparkline';
-import { Users, UserCheck, Shield, AlertCircle, CheckCircle, Clock, MapPin } from 'lucide-react';
+import { Users, UserCheck, Shield, AlertCircle, CheckCircle, Clock } from 'lucide-react';
 
 type Occupancy = {
   roomId: string;
@@ -74,17 +75,14 @@ export default function LandingPage() {
   const handleSearch = async () => {
     setIsSearching(true);
     try {
-      // Filter occupancy data based on search criteria
       let filtered = occupancy;
-      
+
       if (minCapacity) {
         const capacity = parseInt(minCapacity);
         filtered = filtered.filter(r => r.capacity >= capacity);
       }
-      
+
       // In a real app, you'd filter by equipment from room details
-      // For now, just filter by capacity
-      
       setSearchResults(filtered);
     } catch (error) {
       console.error('Search failed:', error);
@@ -96,6 +94,7 @@ export default function LandingPage() {
   const handleAdvancedSearch = () => {
     navigate(`/app/bookings?date=${searchDate}`);
   };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-gray-50">
       {/* Header Section */}
@@ -103,7 +102,10 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-red-900">🏛️ CENTRAL UNIVERSITY</h1>
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-red-900 flex items-center gap-2">
+                <img src={logo} alt="Central University Logo" className="h-6 w-auto inline-block" />
+                <span>CENTRAL UNIVERSITY</span>
+              </h1>
               <p className="text-sm sm:text-base text-red-700 mt-1">RESMAN — Smart Classroom Scheduling</p>
             </div>
             <div className="flex items-center gap-2 sm:gap-3">
@@ -119,100 +121,45 @@ export default function LandingPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        {/* Hero: RESMAN title (left aligned) */}
+        <div className="mb-8">
+          <div className="flex items-center justify-start gap-4">
+            <div>
+              <h2 className="text-4xl sm:text-5xl font-extrabold text-red-900">RESMAN</h2>
+              <p className="text-sm text-red-700 mt-1 opacity-90">Smart Classroom Scheduling</p>
+            </div>
+          </div>
+        </div>
         {/* Role-Based Access Section */}
         <section className="mb-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Student Access */}
-            <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 border border-blue-200 shadow-lg hover:shadow-xl transition">
-              <div className="flex items-center gap-3 mb-4">
-                <Users className="w-8 h-8 text-blue-600" />
-                <h2 className="text-xl font-bold text-blue-900">For Students</h2>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Facilities</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Facility panels - diagonal holders for future images */}
+            <div className="relative overflow-hidden rounded-xl bg-gray-100 h-48">
+              <div className="absolute inset-0 bg-[url('../media/placeholder1.jpg')] bg-center bg-cover opacity-0" />
+              <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/10" />
+              <div className="absolute inset-0" style={{ clipPath: 'polygon(0 0, 100% 0, 80% 100%, 0% 100%)' }}>
+                {/* image will go here */}
               </div>
-              <p className="text-blue-800 text-sm mb-4">
-                Search available classrooms, request bookings for your classes, and manage your reservations.
-              </p>
-              <ul className="space-y-2 mb-6 text-sm text-blue-700">
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4" />
-                  Real-time availability
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4" />
-                  No scheduling conflicts
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4" />
-                  Mobile-friendly access
-                </li>
-              </ul>
-              <Link
-                to="/login"
-                className="w-full block text-center px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition"
-              >
-                Student Login
-              </Link>
+              <div className="absolute left-4 bottom-4 text-white font-semibold">Classrooms</div>
             </div>
 
-            {/* Lecturer/Staff Access */}
-            <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 border border-green-200 shadow-lg hover:shadow-xl transition">
-              <div className="flex items-center gap-3 mb-4">
-                <UserCheck className="w-8 h-8 text-green-600" />
-                <h2 className="text-xl font-bold text-green-900">For Staff & Lecturers</h2>
+            <div className="relative overflow-hidden rounded-xl bg-gray-100 h-48">
+              <div className="absolute inset-0 bg-[url('../media/placeholder2.jpg')] bg-center bg-cover opacity-0" />
+              <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/10" />
+              <div className="absolute inset-0" style={{ clipPath: 'polygon(20% 0, 100% 0, 100% 100%, 0 100%)' }}>
+                {/* image will go here */}
               </div>
-              <p className="text-green-800 text-sm mb-4">
-                Manage department classroom schedules, view timetables, and coordinate bookings.
-              </p>
-              <ul className="space-y-2 mb-6 text-sm text-green-700">
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4" />
-                  Department dashboard
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4" />
-                  Timetable integration
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4" />
-                  Recurring bookings
-                </li>
-              </ul>
-              <Link
-                to="/login"
-                className="w-full block text-center px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition"
-              >
-                Staff Login
-              </Link>
+              <div className="absolute left-4 bottom-4 text-white font-semibold">Halls</div>
             </div>
 
-            {/* Admin Access */}
-            <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6 border border-purple-200 shadow-lg hover:shadow-xl transition">
-              <div className="flex items-center gap-3 mb-4">
-                <Shield className="w-8 h-8 text-purple-600" />
-                <h2 className="text-xl font-bold text-purple-900">For Administrators</h2>
+            <div className="relative overflow-hidden rounded-xl bg-gray-100 h-48">
+              <div className="absolute inset-0 bg-[url('../media/placeholder3.jpg')] bg-center bg-cover opacity-0" />
+              <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black/10" />
+              <div className="absolute inset-0" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 80%, 0 100%)' }}>
+                {/* image will go here */}
               </div>
-              <p className="text-purple-800 text-sm mb-4">
-                System oversight, user management, maintenance scheduling, and analytics.
-              </p>
-              <ul className="space-y-2 mb-6 text-sm text-purple-700">
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4" />
-                  System dashboard
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4" />
-                  User management
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4" />
-                  Analytics & reports
-                </li>
-              </ul>
-              <Link
-                to="/admin-login"
-                className="w-full block text-center px-4 py-2 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition"
-              >
-                Admin Login
-              </Link>
+              <div className="absolute left-4 bottom-4 text-white font-semibold">Labs</div>
             </div>
           </div>
         </section>

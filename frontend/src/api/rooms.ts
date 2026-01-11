@@ -97,19 +97,19 @@ export const roomsApi = {
   async getOccupancy(date: string): Promise<any[]> {
     const response = await apiClient.get('/rooms/occupancy', { date });
     if (!response.success || !response.data) {
-      throw new Error(response.error || 'Failed to fetch room occupancy');
+      throw new Error((response as any).error || 'Failed to fetch room occupancy');
     }
     // Response may be { data: [...] } or the array directly depending on backend shape
-    return (response.data && (response.data.data ?? response.data)) as any[];
+    return ((response.data as any) && ((response.data as any).data ?? response.data)) as any[];
   },
 
   // Get occupancy time-series for rooms between start and end dates
   async getOccupancyRange(start: string, end: string): Promise<any[]> {
     const response = await apiClient.get('/rooms/occupancy/range', { start, end });
     if (!response.success || !response.data) {
-      throw new Error(response.error || 'Failed to fetch occupancy range');
+      throw new Error((response as any).error || 'Failed to fetch occupancy range');
     }
-    return (response.data && (response.data.data ?? response.data)) as any[];
+    return ((response.data as any) && ((response.data as any).data ?? response.data)) as any[];
   },
 
   // Search rooms

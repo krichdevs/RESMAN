@@ -38,9 +38,9 @@ export default function Header({ onMenuClick }: HeaderProps) {
             <Menu className="w-5 h-5" />
           </button>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold text-primary-600">CU ACS</h1>
+            <h1 className="text-xl font-bold text-primary-600">RESMAN</h1>
             <span className="text-sm text-gray-500 hidden sm:block">
-              Available Class System
+              Smart Classroom Scheduling
             </span>
           </div>
         </div>

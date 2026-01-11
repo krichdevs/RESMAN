@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
-import { Eye, EyeOff, LogIn } from 'lucide-react';
+import { Eye, EyeOff, LogIn, Users, UserCheck, Shield } from 'lucide-react';
+import logo from '../media/logo.png';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -31,27 +32,18 @@ export default function LoginPage() {
     resolver: zodResolver(loginSchema),
   });
 
-  // Randomized field names to reduce browser autofill matching
-  const emailFieldName = useMemo(() => `email_${Math.random().toString(36).slice(2)}`, []);
-  const passwordFieldName = useMemo(() => `password_${Math.random().toString(36).slice(2)}`, []);
-
-  useEffect(() => {
-    const clear = () => {
-      const e = document.getElementsByName(emailFieldName)[0] as HTMLInputElement | undefined;
-      const p = document.getElementsByName(passwordFieldName)[0] as HTMLInputElement | undefined;
-      if (e) e.value = '';
-      if (p) p.value = '';
-    };
-
-    clear();
-    const t = setTimeout(clear, 100);
-    return () => clearTimeout(t);
-  }, [emailFieldName, passwordFieldName]);
-
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
     try {
-      await login(data);
+      const loggedUser = await login(data);
+      
+      // Reject admin credentials on student portal
+      if (loggedUser?.role === 'ADMIN') {
+        toast.error('Admins must use the Admin portal. Click the Admin button.');
+        setIsLoading(false);
+        return;
+      }
+      
       toast.success('Welcome back!');
       navigate(from, { replace: true });
     } catch (error: any) {
@@ -66,16 +58,26 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         {/* Logo and Title */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Central University — Miotso Campus</h1>
-          <p className="text-primary-200">RESMAN — Reservation Manager</p>
-          <p className="text-sm text-primary-200 mt-1">Motto: FIATH. INTEGRITY. EXCELLENCE.</p>
+          <img src={logo} alt="Central University Logo" className="h-16 w-auto mx-auto mb-4" />
+          <h1 className="text-3xl font-bold text-white mb-2">RESMAN</h1>
+          <p className="text-primary-200">Smart Classroom Scheduling</p>
+          <p className="text-xs italic lowercase text-primary-300 mt-2">faith. integrity. excellence.</p>
         </div>
 
-        {/* Login Card */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Sign In</h2>
+        {/* Login Card with role selector on left */}
+        <div className="bg-white rounded-2xl shadow-xl p-6 lg:p-8 flex flex-col lg:flex-row gap-6 items-stretch relative">
+          {/* Admin button: lower right corner */}
+          <div className="absolute bottom-4 right-4 lg:bottom-6 lg:right-6">
+            <button onClick={() => navigate('/admin-login')} className="flex items-center gap-2 justify-center px-3 py-2 bg-purple-600 text-white text-sm rounded hover:bg-purple-700 transition">
+              <Shield className="w-4 h-4" /> Admin
+            </button>
+          </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" autoComplete="off">
+          {/* Right: form */}
+          <div className="flex-1">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Sign In</h2>
+
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" autoComplete="off">
             {/* Email Field */}
             <div>
               <label htmlFor="email" className="label">
@@ -83,7 +85,6 @@ export default function LoginPage() {
               </label>
               <input
                 id="email"
-                name={emailFieldName}
                 type="email"
                 autoComplete="username"
                 {...register('email')}
@@ -103,7 +104,6 @@ export default function LoginPage() {
               <div className="relative">
                 <input
                   id="password"
-                  name={passwordFieldName}
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   {...register('password')}
@@ -141,21 +141,21 @@ export default function LoginPage() {
                 </span>
               )}
             </button>
-          </form>
+            </form>
 
-          {/* Footer */}
-            <div className="mt-6 text-center">
+            {/* Footer */}
+            <div className="mt-6">
               <p className="text-sm text-gray-500 mb-2">Contact IT support if you need assistance</p>
-              <div className="flex justify-center gap-4">
+              <div className="flex gap-4">
                 <a href="/register" className="text-primary-700 hover:underline text-sm">Register</a>
                 <a href="/reset-password" className="text-primary-700 hover:underline text-sm">Forgot password?</a>
               </div>
             </div>
+          </div>
         </div>
-
         {/* Copyright */}
         <p className="text-center text-primary-200 text-sm mt-8">
-          © {new Date().getFullYear()} Central University — Miotso Campus. Motto: FIATH. INTEGRITY. EXCELLENCE. All rights reserved.
+          © {new Date().getFullYear()} Central University — Miotso Campus. All rights reserved.
         </p>
       </div>
     </div>

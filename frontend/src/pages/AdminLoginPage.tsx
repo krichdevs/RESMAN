@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Shield, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
+import logo from '../media/logo.png';
 
 export default function AdminLoginPage() {
   const navigate = useNavigate();
@@ -19,21 +20,20 @@ export default function AdminLoginPage() {
     setIsLoading(true);
 
     try {
-      const response = await login(email, password);
+      const loggedUser = await login({ email, password });
       
-      // Check if user is admin
-      if (response.user.role !== 'ADMIN') {
-        setError('This page is for administrators only. Please use the regular login.');
+      // Verify user is admin
+      if (!loggedUser || loggedUser.role !== 'ADMIN') {
+        setError('This page is for administrators only. Please use regular login.');
         setIsLoading(false);
         return;
       }
 
       toast.success('Welcome back, Administrator!');
-      navigate('/app/admin/dashboard');
+      navigate('/app/admin/dashboard', { replace: true });
     } catch (err: any) {
-      const message = err.response?.data?.error || 'Login failed. Please check your credentials.';
-      setError(message);
-      toast.error(message);
+      setError(err.message || 'Admin login failed. Please check your credentials.');
+      toast.error(err.message || 'Admin login failed');
     } finally {
       setIsLoading(false);
     }
@@ -44,11 +44,10 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-md">
         {/* Logo/Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-500 rounded-full mb-4">
-            <Shield className="w-8 h-8 text-white" />
-          </div>
+          <img src={logo} alt="Central University Logo" className="h-16 w-auto mx-auto mb-4" />
           <h1 className="text-3xl font-bold text-white mb-2">Administrator Portal</h1>
-          <p className="text-purple-100">Central University — RESMAN</p>
+          <p className="text-purple-100">RESMAN</p>
+          <p className="text-xs italic lowercase text-purple-200 mt-2">faith. integrity. excellence.</p>
         </div>
 
         {/* Login Form */}

@@ -90,7 +90,7 @@ export const authApi = {
 
   // Change password
   async changePassword(data: { currentPassword: string; newPassword: string }): Promise<void> {
-    const response = await apiClient.post('/auth/change-password', data);
+    const response = await apiClient.put('/auth/change-password', data);
     if (!response.success) {
       throw new Error(response.error || 'Password change failed');
     }

@@ -4,7 +4,7 @@ import { authApi } from '../api/auth';
 
 interface AuthContextType {
   user: User | null;
-  login: (credentials: LoginCredentials) => Promise<void>;
+  login: (credentials: LoginCredentials) => Promise<User>;
   logout: () => Promise<void>;
   isAuthenticated: boolean;
   isLoading: boolean;
@@ -47,8 +47,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const login = async (credentials: LoginCredentials) => {
     setIsLoading(true);
     try {
-      const user = await authApi.login(credentials);
-      setUser(user);
+      const loggedUser = await authApi.login(credentials);
+      setUser(loggedUser);
+      return loggedUser;
     } finally {
       setIsLoading(false);
     }

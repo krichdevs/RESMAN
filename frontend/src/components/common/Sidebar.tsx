@@ -63,7 +63,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-gray-200">
             <div className="flex items-center gap-2">
-              <h2 className="text-lg font-semibold text-gray-900">CU ACS</h2>
+              <h2 className="text-lg font-semibold text-gray-900">RESMAN</h2>
             </div>
             <button
               onClick={onClose}

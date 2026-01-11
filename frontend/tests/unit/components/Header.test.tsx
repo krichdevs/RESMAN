@@ -43,8 +43,8 @@ describe('Header', () => {
   it('renders the header with user information', () => {
     renderWithProviders(<Header />);
 
-    expect(screen.getByText('CU ACS')).toBeInTheDocument();
-    expect(screen.getByText('Available Class System')).toBeInTheDocument();
+    expect(screen.getByText('RESMAN')).toBeInTheDocument();
+    expect(screen.getByText('Smart Classroom Scheduling')).toBeInTheDocument();
     expect(screen.getByText('John Doe')).toBeInTheDocument();
     expect(screen.getByText('STUDENT')).toBeInTheDocument();
   });
