@@ -1,0 +1,51 @@
+{
+  "name": "resman",
+  "version": "1.0.0",
+  "description": "RESMAN (Reservation Manager) - A web-based classroom reservation system",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "docker-compose up -d",
+    "dev:backend": "npm run dev --workspace=backend",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "build": "npm run build --workspaces",
+    "build:backend": "npm run build --workspace=backend",
+    "build:frontend": "npm run build --workspace=frontend",
+    "test": "npm run test --workspaces",
+    "test:backend": "npm run test --workspace=backend",
+    "test:frontend": "npm run test --workspace=frontend",
+    "lint": "npm run lint --workspaces",
+    "lint:fix": "npm run lint:fix --workspaces",
+    "db:migrate": "npm run db:migrate --workspace=backend",
+    "db:seed": "npm run db:seed --workspace=backend",
+    "db:reset": "npm run db:reset --workspace=backend",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "docker:build": "docker-compose build",
+    "clean": "rm -rf node_modules && rm -rf backend/node_modules && rm -rf frontend/node_modules"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/krichdevs/RESMAN.git"
+  },
+  "keywords": [
+    "classroom",
+    "scheduling",
+    "booking",
+    "university",
+    "room-management",
+    "react",
+    "nodejs",
+    "typescript"
+  ],
+  "author": "Central University IT Department",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
