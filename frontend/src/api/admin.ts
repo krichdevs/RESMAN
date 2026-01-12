@@ -87,7 +87,8 @@ export const deleteUser = async (userId: string): Promise<{ message: string }> =
 export const getDashboardStats = async () => {
   const response = await apiClient.get<any>('/admin/dashboard/stats');
   if (response.success && response.data) {
-    return response.data;
+    // response.data contains the axios response which has { success, data }
+    return response.data.data || response.data;
   }
   throw new Error(response.error || 'Failed to fetch dashboard stats');
 };

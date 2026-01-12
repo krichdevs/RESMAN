@@ -25,7 +25,7 @@ export default function AdminReportsPage() {
         setLoading(true);
         setError(null);
         const data = await getDashboardStats();
-        setStats(data.data);
+        setStats(data);
       } catch (err) {
         const errorMsg = err instanceof Error ? err.message : 'Failed to fetch statistics';
         setError(errorMsg);

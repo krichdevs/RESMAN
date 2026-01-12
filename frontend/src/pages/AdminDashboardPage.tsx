@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { Users, Building2, Calendar, AlertCircle, TrendingUp, BarChart3, CheckSquare } from 'lucide-react';
+import { getDashboardStats } from '../api/admin';
 
 type AdminStats = {
   totalUsers: number;
@@ -14,6 +15,7 @@ type AdminStats = {
 
 export default function AdminDashboardPage() {
   const { user } = useAuth();
+  const hasInitialized = useRef(false);
   const [stats, setStats] = useState<AdminStats>({
     totalUsers: 0,
     activeBookings: 0,
@@ -22,19 +24,36 @@ export default function AdminDashboardPage() {
     maintenanceIssues: 0,
     systemHealth: 98,
   });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // TODO: Fetch admin statistics from API
-    // For now, set mock data
-    setStats({
-      totalUsers: 1242,
-      activeBookings: 487,
-      totalRooms: 45,
-      pendingApprovals: 12,
-      maintenanceIssues: 3,
-      systemHealth: 98,
-    });
+    if (hasInitialized.current) return;
+    hasInitialized.current = true;
+    fetchDashboardStats();
   }, []);
+
+  const fetchDashboardStats = async () => {
+    try {
+      setLoading(true);
+      const data = await getDashboardStats();
+      console.log('Dashboard stats received:', data);
+      
+      // Map backend data to our stats structure
+      setStats({
+        totalUsers: data?.totalUsers || 0,
+        activeBookings: data?.totalBookings || 0,
+        totalRooms: data?.totalRooms || 0,
+        pendingApprovals: 0, // Not available from endpoint
+        maintenanceIssues: 0, // Not available from endpoint
+        systemHealth: 98,
+      });
+    } catch (error: any) {
+      console.error('Failed to fetch dashboard stats:', error);
+      // Keep default values on error
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const adminStats = [
     { name: 'Total Users', value: String(stats.totalUsers), icon: Users, color: 'bg-blue-500' },
