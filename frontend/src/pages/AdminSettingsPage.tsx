@@ -22,7 +22,7 @@ export default function AdminSettingsPage() {
           </button>
         </div>
 
-        <Link to="/app/admin/database-settings" className="bg-white p-6 rounded-xl shadow-card border border-gray-200 hover:shadow-lg transition">
+        <Link to="/admin/database-settings" className="bg-white p-6 rounded-xl shadow-card border border-gray-200 hover:shadow-lg transition">
           <div className="flex items-center gap-3 mb-4">
             <Database className="w-6 h-6 text-green-600" />
             <h3 className="font-semibold text-gray-900">Database Settings</h3>
