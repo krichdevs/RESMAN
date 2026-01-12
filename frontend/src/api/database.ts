@@ -26,13 +26,15 @@ export const databaseApi = {
   async exportDatabase() {
     try {
       const token = localStorage.getItem('auth_token');
-      const baseURL = ((import.meta as any).env.VITE_API_URL as string) || 'http://localhost:5000';
+      // Remove /api suffix if present since we're adding the full path
+      const baseURL = ((import.meta as any).env.VITE_API_URL as string) || 'http://localhost:5000/api';
+      const cleanBaseURL = baseURL.endsWith('/api') ? baseURL.slice(0, -4) : baseURL;
       const response = await axios.get('/api/admin/database/export', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
         responseType: 'blob',
-        baseURL: baseURL,
+        baseURL: cleanBaseURL,
       });
       return response.data;
     } catch (error: any) {
