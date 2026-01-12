@@ -8,7 +8,9 @@ import {
   Settings,
   Users,
   FileText,
+  CheckSquare,
   X,
+  GraduationCap,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -29,7 +31,9 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
   // Admin only navigation
   const adminNavigation = [
-    { name: 'Users', href: '/admin/users', icon: Users },
+    { name: 'Bookings', href: '/admin/bookings', icon: CheckSquare },
+    { name: 'System Users', href: '/admin/users', icon: Users },
+    { name: 'Students', href: '/admin/students', icon: GraduationCap },
     { name: 'Reports', href: '/admin/reports', icon: FileText },
     { name: 'Settings', href: '/admin/settings', icon: Settings },
   ];

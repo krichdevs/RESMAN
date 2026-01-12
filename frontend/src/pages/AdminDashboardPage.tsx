@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Users, Building2, Calendar, AlertCircle, TrendingUp, BarChart3 } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Users, Building2, Calendar, AlertCircle, TrendingUp, BarChart3, CheckSquare } from 'lucide-react';
 
 type AdminStats = {
   totalUsers: number;
@@ -75,17 +76,30 @@ export default function AdminDashboardPage() {
         <div className="bg-white rounded-xl p-6 shadow-card border border-gray-200">
           <h2 className="text-lg font-bold text-gray-900 mb-4">Management Actions</h2>
           <div className="space-y-3">
-            <button className="w-full text-left px-4 py-3 hover:bg-gray-50 rounded-lg border border-gray-200 transition">
+            <Link
+              to="/admin/bookings"
+              className="flex items-center justify-between w-full px-4 py-3 hover:bg-gray-50 rounded-lg border border-gray-200 transition group"
+            >
+              <div>
+                <p className="font-medium text-gray-900 flex items-center gap-2">
+                  <CheckSquare className="w-5 h-5 text-indigo-600" />
+                  Manage Bookings
+                </p>
+                <p className="text-sm text-gray-600 mt-1">Approve/reject booking requests</p>
+              </div>
+              <span className="text-indigo-600 group-hover:translate-x-1 transition-transform">→</span>
+            </Link>
+            <button className="w-full text-left px-4 py-3 hover:bg-gray-50 rounded-lg border border-gray-200 transition opacity-60 cursor-not-allowed">
               <p className="font-medium text-gray-900">👥 Manage Users</p>
-              <p className="text-sm text-gray-600 mt-1">Add, edit, or remove user accounts</p>
+              <p className="text-sm text-gray-600 mt-1">Add, edit, or remove user accounts (Coming Soon)</p>
             </button>
-            <button className="w-full text-left px-4 py-3 hover:bg-gray-50 rounded-lg border border-gray-200 transition">
+            <button className="w-full text-left px-4 py-3 hover:bg-gray-50 rounded-lg border border-gray-200 transition opacity-60 cursor-not-allowed">
               <p className="font-medium text-gray-900">🏢 Configure Rooms</p>
-              <p className="text-sm text-gray-600 mt-1">Add/edit rooms, capacity, equipment</p>
+              <p className="text-sm text-gray-600 mt-1">Add/edit rooms, capacity, equipment (Coming Soon)</p>
             </button>
-            <button className="w-full text-left px-4 py-3 hover:bg-gray-50 rounded-lg border border-gray-200 transition">
+            <button className="w-full text-left px-4 py-3 hover:bg-gray-50 rounded-lg border border-gray-200 transition opacity-60 cursor-not-allowed">
               <p className="font-medium text-gray-900">🔧 Maintenance Schedule</p>
-              <p className="text-sm text-gray-600 mt-1">Block rooms for maintenance</p>
+              <p className="text-sm text-gray-600 mt-1">Block rooms for maintenance (Coming Soon)</p>
             </button>
           </div>
         </div>

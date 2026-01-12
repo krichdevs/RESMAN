@@ -22,16 +22,19 @@ export default function AdminLoginPage() {
     try {
       const loggedUser = await login({ email, password });
       
-      // Verify user is admin
-      if (!loggedUser || loggedUser.role !== 'ADMIN') {
-        setError('This page is for administrators only. Please use regular login.');
+      console.log('Login successful. User details:', loggedUser);
+
+      // Verify user is admin or staff
+      if (!loggedUser || (loggedUser.role !== 'ADMIN' && loggedUser.role !== 'STAFF')) {
+        setError(`Access denied. Your role (${loggedUser?.role || 'UNKNOWN'}) is not authorized for admin access. Only ADMIN and STAFF roles can access this portal.`);
         setIsLoading(false);
         return;
       }
 
-      toast.success('Welcome back, Administrator!');
+      toast.success(`Welcome back, ${loggedUser.role}!`);
       navigate('/app/admin/dashboard', { replace: true });
     } catch (err: any) {
+      console.error('Admin login error:', err);
       setError(err.message || 'Admin login failed. Please check your credentials.');
       toast.error(err.message || 'Admin login failed');
     } finally {

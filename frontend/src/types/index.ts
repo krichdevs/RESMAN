@@ -6,10 +6,19 @@ export interface User {
   email: string;
   firstName: string;
   lastName: string;
+  indexNumber?: string;
   role: UserRole;
   department?: string;
+  groupName?: string;
+  phone?: string;
+  isActive: boolean;
+  emailVerified: boolean;
   createdAt: string;
   updatedAt: string;
+  lastLogin?: string;
+  _count?: {
+    bookings: number;
+  };
 }
 
 // Room types

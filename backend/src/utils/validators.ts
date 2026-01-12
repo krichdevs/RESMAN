@@ -89,6 +89,11 @@ export const createTimeSlotSchema = z.object({
 export const paginationSchema = z.object({
   page: z.coerce.number().int().positive().default(1),
   limit: z.coerce.number().int().positive().max(100).default(10),
+  search: z.string().optional(),
+  role: z.string().optional(),
+  isActive: z.string().optional(),
+  includeStudents: z.string().optional(),
+  department: z.string().optional(),
 });
 
 export const roomFilterSchema = z.object({

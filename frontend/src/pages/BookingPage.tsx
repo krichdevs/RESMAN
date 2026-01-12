@@ -267,13 +267,18 @@ export default function BookingPage() {
                 Step 4: Booking Details
               </label>
               <div className="space-y-3">
-                <input
-                  type="text"
-                  placeholder="e.g., ITEC 303 - Systems Design Lecture"
-                  value={form.title}
-                  onChange={(e) => setForm({ ...form, title: e.target.value })}
-                  className="w-full input"
-                />
+                <div>
+                  <input
+                    type="text"
+                    placeholder="e.g., ITEC 303 - Systems Design Lecture"
+                    value={form.title}
+                    onChange={(e) => setForm({ ...form, title: e.target.value })}
+                    className={`w-full input ${!form.title && selectedRoom && selectedDate && selectedSlot ? 'border-red-300' : ''}`}
+                  />
+                  {!form.title && selectedRoom && selectedDate && selectedSlot && (
+                    <p className="mt-1 text-xs text-red-600">Title is required for booking</p>
+                  )}
+                </div>
                 <input
                   type="text"
                   placeholder="Course code (optional)"

@@ -47,12 +47,15 @@ class ApiClient {
   // Generic GET request
   async get<T>(url: string, params?: Record<string, any>): Promise<ApiResponse<T>> {
     try {
+      console.log('🔗 Building GET URL:', url, 'with params:', params);
       const response = await this.client.get(url, { params });
+      console.log('✅ API GET Success:', url, 'Status:', response.status, 'Data:', response.data);
       return {
         success: true,
         data: response.data,
       };
     } catch (error: any) {
+      console.error('❌ API GET Error:', url, error.response?.status, error.response?.data, error.message);
       return {
         success: false,
         error: error.response?.data?.message || error.message,

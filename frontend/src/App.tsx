@@ -16,6 +16,12 @@ import LoginPage from './pages/LoginPage';
 import AdminLoginPage from './pages/AdminLoginPage';
 import DashboardPage from './pages/DashboardPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
+import AdminBookingsPage from './pages/AdminBookingsPage';
+import AdminUsersPage from './pages/AdminUsersPage';
+import AdminStudentsPage from './pages/AdminStudentsPage';
+import AdminReportsPage from './pages/AdminReportsPage';
+import AdminSettingsPage from './pages/AdminSettingsPage';
+import RoomsPage from './pages/RoomsPage';
 import BookingPage from './pages/BookingPage';
 import LandingPage from './pages/LandingPage';
 import RegisterPage from './pages/RegisterPage';
@@ -50,6 +56,7 @@ function App() {
                           <Routes>
                             <Route path="/dashboard" element={<DashboardPage />} />
                             <Route path="/bookings" element={<BookingPage />} />
+                            <Route path="/rooms" element={<RoomsPage />} />
                             <Route path="/" element={<Navigate to="/dashboard" replace />} />
                             {/* Add more routes here */}
                           </Routes>
@@ -72,6 +79,11 @@ function App() {
                         <main className="flex-1 overflow-y-auto p-6">
                           <Routes>
                             <Route path="/dashboard" element={<AdminDashboardPage />} />
+                            <Route path="/bookings" element={<AdminBookingsPage />} />
+                            <Route path="/users" element={<AdminUsersPage />} />
+                            <Route path="/students" element={<AdminStudentsPage />} />
+                            <Route path="/reports" element={<AdminReportsPage />} />
+                            <Route path="/settings" element={<AdminSettingsPage />} />
                             <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
                           </Routes>
                         </main>
