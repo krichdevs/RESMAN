@@ -2,21 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Building2, Users, MapPin, Wifi, Monitor, Coffee } from 'lucide-react';
 import apiClient from '../api/client';
+import { roomsApi } from '../api/rooms';
+import RoomDetailsModal from '../components/common/RoomDetailsModal';
+import type { Room } from '../types';
 
-type Room = {
-  id: string;
-  name: string;
-  building: string;
-  floor: string;
-  capacity: number;
-  equipment: string;
-  description?: string;
-};
+
 
 export default function RoomsPage() {
   const { user } = useAuth();
   const [rooms, setRooms] = useState<Room[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     fetchRooms();
@@ -45,6 +42,21 @@ export default function RoomsPage() {
       if (trimmed.includes('coffee') || trimmed.includes('refreshment')) return <Coffee key={index} className="w-4 h-4" />;
       return null;
     }).filter(Boolean);
+  };
+
+  const handleViewDetails = async (roomId: string) => {
+    try {
+      const room = await roomsApi.getRoom(roomId);
+      setSelectedRoom(room);
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error('Error fetching room details:', error);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedRoom(null);
   };
 
   if (loading) {
@@ -97,7 +109,10 @@ export default function RoomsPage() {
                 )}
               </div>
 
-              <button className="w-full mt-4 bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition font-medium">
+              <button
+                onClick={() => handleViewDetails(room.id)}
+                className="w-full mt-4 bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition font-medium"
+              >
                 View Details
               </button>
             </div>
@@ -110,6 +125,21 @@ export default function RoomsPage() {
           <Building2 className="w-12 h-12 mx-auto mb-4 text-gray-300" />
           <p className="text-gray-500">No rooms available at the moment.</p>
         </div>
+      )}
+
+      {/* Room Details Modal */}
+      {selectedRoom && (
+        <RoomDetailsModal
+          isOpen={isModalOpen}
+          roomId={selectedRoom.id}
+          roomName={selectedRoom.name}
+          capacity={selectedRoom.capacity}
+          building={selectedRoom.building}
+          floor={selectedRoom.floor}
+          equipment={selectedRoom.amenities || []}
+          availability="Available"
+          onClose={handleCloseModal}
+        />
       )}
     </div>
   );
