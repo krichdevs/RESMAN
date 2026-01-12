@@ -26,12 +26,13 @@ export const databaseApi = {
   async exportDatabase() {
     try {
       const token = localStorage.getItem('auth_token');
+      const baseURL = ((import.meta as any).env.VITE_API_URL as string) || 'http://localhost:5000';
       const response = await axios.get('/api/admin/database/export', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
         responseType: 'blob',
-        baseURL: (import.meta as any).env.VITE_API_URL || 'http://localhost:5000/api',
+        baseURL: baseURL,
       });
       return response.data;
     } catch (error: any) {
