@@ -26,9 +26,10 @@ export interface Room {
   id: string;
   name: string;
   building: string;
-  floor: number;
+  floor: string;
   capacity: number;
-  amenities: string[];
+  equipment: string;
+  description?: string;
   isActive: boolean;
   createdAt: string;
   updatedAt: string;

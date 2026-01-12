@@ -24,11 +24,12 @@ export const roomsApi = {
 
   // Get room by ID
   async getRoom(id: string): Promise<Room> {
-    const response = await apiClient.get<{ room: Room }>(`/rooms/${id}`);
+    const response = await apiClient.get<any>(`/rooms/${id}`);
     if (!response.success || !response.data) {
       throw new Error(response.error || 'Failed to fetch room');
     }
-    return response.data.room;
+    // response.data contains {success: true, data: room} from backend
+    return response.data.data || response.data;
   },
 
   // Get room with time slots

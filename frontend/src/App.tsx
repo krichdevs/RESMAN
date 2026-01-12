@@ -21,6 +21,7 @@ import AdminUsersPage from './pages/AdminUsersPage';
 import AdminStudentsPage from './pages/AdminStudentsPage';
 import AdminReportsPage from './pages/AdminReportsPage';
 import AdminSettingsPage from './pages/AdminSettingsPage';
+import AdminDatabaseSettingsPage from './pages/AdminDatabaseSettingsPage';
 import RoomsPage from './pages/RoomsPage';
 import BookingPage from './pages/BookingPage';
 import LandingPage from './pages/LandingPage';
@@ -84,6 +85,7 @@ function App() {
                             <Route path="/students" element={<AdminStudentsPage />} />
                             <Route path="/reports" element={<AdminReportsPage />} />
                             <Route path="/settings" element={<AdminSettingsPage />} />
+                            <Route path="/database-settings" element={<AdminDatabaseSettingsPage />} />
                             <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
                           </Routes>
                         </main>

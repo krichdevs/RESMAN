@@ -46,11 +46,14 @@ export default function RoomsPage() {
 
   const handleViewDetails = async (roomId: string) => {
     try {
+      console.log('📋 Fetching room details for:', roomId);
       const room = await roomsApi.getRoom(roomId);
+      console.log('📦 Room data received:', room);
       setSelectedRoom(room);
+      console.log('✅ Modal should open now');
       setIsModalOpen(true);
     } catch (error) {
-      console.error('Error fetching room details:', error);
+      console.error('❌ Error fetching room details:', error);
     }
   };
 
@@ -135,8 +138,8 @@ export default function RoomsPage() {
           roomName={selectedRoom.name}
           capacity={selectedRoom.capacity}
           building={selectedRoom.building}
-          floor={selectedRoom.floor}
-          equipment={selectedRoom.amenities || []}
+          floor={Number(selectedRoom.floor.replace(/\D/g, '')) || 1}
+          equipment={selectedRoom.equipment ? selectedRoom.equipment.split(',').map(e => e.trim()) : []}
           availability="Available"
           onClose={handleCloseModal}
         />

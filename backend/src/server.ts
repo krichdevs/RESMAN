@@ -16,6 +16,7 @@ import bookingRoutes from './routes/bookings';
 import timeslotRoutes from './routes/timeslots';
 import auditRoutes from './routes/audit';
 import adminRoutes from './routes/admin';
+import databaseRoutes from './routes/database';
 
 // Import socket handler
 import { initializeSocket } from './services/socket';
@@ -79,6 +80,7 @@ export async function createServer(): Promise<{ app: Application; httpServer: Se
   app.use('/api/timeslots', timeslotRoutes);
   app.use('/api/audit', auditRoutes);
   app.use('/api/admin', adminRoutes);
+  app.use('/api/admin/database', databaseRoutes);
 
   // API documentation endpoint
   app.get('/api/docs', (req: Request, res: Response) => {

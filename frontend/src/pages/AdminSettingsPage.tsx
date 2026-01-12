@@ -1,5 +1,6 @@
 import React from 'react';
 import { Settings, Shield, Database, Mail, Bell } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function AdminSettingsPage() {
   return (
@@ -21,16 +22,16 @@ export default function AdminSettingsPage() {
           </button>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-card border border-gray-200">
+        <Link to="/app/admin/database-settings" className="bg-white p-6 rounded-xl shadow-card border border-gray-200 hover:shadow-lg transition">
           <div className="flex items-center gap-3 mb-4">
             <Database className="w-6 h-6 text-green-600" />
             <h3 className="font-semibold text-gray-900">Database Settings</h3>
           </div>
-          <p className="text-gray-600 text-sm">Backup schedules, maintenance windows, data retention</p>
+          <p className="text-gray-600 text-sm">Backup, export, cleanup, and optimize database</p>
           <button className="mt-3 text-green-600 hover:text-green-700 text-sm font-medium">
             Configure →
           </button>
-        </div>
+        </Link>
 
         <div className="bg-white p-6 rounded-xl shadow-card border border-gray-200">
           <div className="flex items-center gap-3 mb-4">
