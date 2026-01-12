@@ -85,7 +85,7 @@ export const deleteUser = async (userId: string): Promise<{ message: string }> =
 
 // Get dashboard statistics
 export const getDashboardStats = async () => {
-  const response = await apiClient.get('/admin/dashboard/stats');
+  const response = await apiClient.get<any>('/admin/dashboard/stats');
   if (response.success && response.data) {
     return response.data;
   }
