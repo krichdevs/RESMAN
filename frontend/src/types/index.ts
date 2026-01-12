@@ -146,9 +146,10 @@ export interface UpdateRoomData extends Partial<CreateRoomData> {
 }
 
 export interface RoomAvailability {
-  roomId: string;
+  room: Room;
   date: string;
-  availableSlots: TimeSlot[];
+  dayOfWeek: number;
+  availability: Array<TimeSlot & { isAvailable: boolean; booking?: any }>;
 }
 
 // Booking types (extended)

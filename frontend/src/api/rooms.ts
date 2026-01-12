@@ -67,15 +67,16 @@ export const roomsApi = {
   },
 
   // Get room availability for a specific date
-  async getRoomAvailability(roomId: string, date: string): Promise<RoomAvailability> {
-    const response = await apiClient.get<{ availability: RoomAvailability }>(
+  async getRoomAvailability(roomId: string, date: string): Promise<any> {
+    const response = await apiClient.get<any>(
       `/rooms/${roomId}/availability`,
       { date }
     );
     if (!response.success || !response.data) {
       throw new Error(response.error || 'Failed to fetch room availability');
     }
-    return response.data.availability;
+    // Return the nested data object that contains { room, date, dayOfWeek, availability }
+    return response.data;
   },
 
   // Get available rooms for a time slot
