@@ -32,7 +32,7 @@ export default function AdminLoginPage() {
       }
 
       toast.success(`Welcome back, ${loggedUser.role}!`);
-      navigate('/app/admin/dashboard', { replace: true });
+      navigate('/admin/dashboard', { replace: true });
     } catch (err: any) {
       console.error('Admin login error:', err);
       setError(err.message || 'Admin login failed. Please check your credentials.');
