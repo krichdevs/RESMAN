@@ -64,12 +64,17 @@ export default function LandingPage() {
   ]);
 
   useEffect(() => {
-    const date = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-    roomsApi.getOccupancy(date).then((data) => setOccupancy(data as Occupancy[])).catch(() => setOccupancy([]));
+    // TODO: These endpoints need to be created
+    // const date = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    // roomsApi.getOccupancy(date).then((data) => setOccupancy(data as Occupancy[])).catch(() => setOccupancy([]));
 
-    const end = new Date().toISOString().split('T')[0];
-    const start = new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-    roomsApi.getOccupancyRange(start, end).then((d) => setRangeData(d as OccupancyRange[])).catch(() => setRangeData([]));
+    // const end = new Date().toISOString().split('T')[0];
+    // const start = new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+    // roomsApi.getOccupancyRange(start, end).then((d) => setRangeData(d as OccupancyRange[])).catch(() => setRangeData([]));
+    
+    // For now, set empty data to prevent errors
+    setOccupancy([]);
+    setRangeData([]);
   }, []);
 
   const handleSearch = async () => {
