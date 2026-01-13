@@ -38,10 +38,10 @@ export interface UsersQueryParams {
 export const getUsers = async (params: UsersQueryParams = {}): Promise<PaginatedResponse<User>> => {
   console.log('📡 getUsers called with params:', params);
   const response = await apiClient.get<{ users: User[]; pagination: any }>('/admin/users', params);
-  if (response.success && response.data && response.data.data) {
+  if (response.success && response.data) {
     return {
-      data: response.data.data.users,
-      ...response.data.data.pagination,
+      data: response.data.users,
+      ...response.data.pagination,
     };
   }
   throw new Error(response.error || 'Failed to fetch users');
