@@ -1,23 +1,17 @@
 {
   "version": 2,
-  "buildCommand": "npm run build:frontend && npm run build:backend",
+  "outputDirectory": "frontend/dist",
   "env": {
-    "DATABASE_URL": "@database_url",
-    "NODE_ENV": "production",
-    "JWT_SECRET": "@jwt_secret",
-    "FRONTEND_URL": "@frontend_url"
-  },
-  "functions": {
-    "api/**/*.ts": {
-      "runtime": "nodejs18.x",
-      "memory": 512,
-      "maxDuration": 30
-    }
+    "NODE_ENV": "production"
   },
   "rewrites": [
     {
       "source": "/api/(.*)",
       "destination": "/api/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }

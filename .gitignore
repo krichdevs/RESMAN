@@ -74,3 +74,4 @@ temp/
 # Misc
 *.pem
 *.key
+.vercel
